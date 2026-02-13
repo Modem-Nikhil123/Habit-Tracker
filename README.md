@@ -6,37 +6,39 @@ This project simulates a real SaaS-style productivity dashboard with authenticat
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
 Momentum is a habit and focus tracking application designed to:
 
-- Authenticate users securely  
-- Allow daily activity logging  
-- Provide historical data exploration  
-- Generate weekly aggregated analytics  
-- Visualize insights through animated 3D bar charts  
+- Authenticate users securely
+- Allow daily activity logging
+- Provide historical data exploration
+- Generate weekly aggregated analytics
+- Visualize insights through animated 3D bar charts
 
 The application emphasizes:
 
-- Clear architectural separation  
-- API-driven data flow  
-- Structured UI hierarchy  
-- Data-first visualization  
-- Clean engineering practices  
+- Clear architectural separation
+- API-driven data flow
+- Structured UI hierarchy
+- Data-first visualization
+- Clean engineering practices
 
 This is built as a coherent micro-product rather than isolated feature pages.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
+
 - React (Vite)
 - Tailwind CSS
 - Three.js (3D visualization)
 - Axios (API communication)
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB
@@ -45,15 +47,17 @@ This is built as a coherent micro-product rather than isolated feature pages.
 - bcrypt (password hashing)
 
 ### Deployment
+
 - Frontend: @Vercel
 - Backend: @Render
 - Database: @MongoDB Atlas
 
 ---
 
-## 📦 Setup Instructions
+## Setup Instructions
 
 ### 1. Clone Repository
+
 ```bash
 git clone <repository-url>
 cd momentum-analytics
@@ -100,7 +104,7 @@ VITE_API_URL=http://localhost:5000
 
 ---
 
-## 🗄 Data Model / Schema
+## Data Model / Schema
 
 ### User Schema
 
@@ -114,9 +118,9 @@ VITE_API_URL=http://localhost:5000
 }
 ```
 
-* Email is unique
-* Password stored using bcrypt hashing
-* JWT generated upon login
+- Email is unique
+- Password stored using bcrypt hashing
+- JWT generated upon login
 
 ---
 
@@ -138,15 +142,15 @@ Each activity belongs to a specific authenticated user.
 
 ---
 
-## 📊 Analytics Logic
+## Analytics Logic
 
 Analytics are calculated dynamically via backend aggregation.
 
 ### Weekly Time Range
 
-* System determines start and end of current week
-* Filters activities within that date range
-* Filters by authenticated user
+- System determines start and end of current week
+- Filters activities within that date range
+- Filters by authenticated user
 
 ---
 
@@ -187,7 +191,7 @@ Used to generate percentage-based breakdown in the UI.
 
 ---
 
-## 🎥 Three.js Visualization Logic
+## Three.js Visualization Logic
 
 The analytics visualization is implemented using Three.js and maps backend data directly to 3D geometry.
 
@@ -201,8 +205,8 @@ Each data item:
 
 Is converted into:
 
-* One 3D bar (`BoxGeometry`)
-* Height proportional to duration
+- One 3D bar (`BoxGeometry`)
+- Height proportional to duration
 
 ---
 
@@ -212,30 +216,30 @@ Is converted into:
 normalizedHeight = (value / maxValue) * MAX_HEIGHT
 ```
 
-* Maintains visual balance
-* Preserves relative proportions
-* Prevents extreme height distortion
+- Maintains visual balance
+- Preserves relative proportions
+- Prevents extreme height distortion
 
 ---
 
 ### Animation Logic
 
-* Bars initialize with `scale.y = 0`
-* Animated upward using easing
-* Staggered animation for depth
-* Subtle camera motion for dimensional feel
+- Bars initialize with `scale.y = 0`
+- Animated upward using easing
+- Staggered animation for depth
+- Subtle camera motion for dimensional feel
 
 ---
 
 ### Interaction
 
-* Raycasting for hover detection
-* Hovered bars scale slightly and brighten
-* Proper resource disposal on component unmount
+- Raycasting for hover detection
+- Hovered bars scale slightly and brighten
+- Proper resource disposal on component unmount
 
 ---
 
-## 🧭 Application Structure
+## Application Structure
 
 ```
 backend/
@@ -255,14 +259,14 @@ frontend/
 
 Clear separation between:
 
-* Authentication layer
-* Activity management
-* Analytics computation
-* Visualization engine
+- Authentication layer
+- Activity management
+- Analytics computation
+- Visualization engine
 
 ---
 
-## 🧠 Assumptions & Architectural Decisions
+## Assumptions & Architectural Decisions
 
 1. Custom JWT authentication was implemented instead of OAuth to explicitly demonstrate backend security design, token validation, and protected route handling.
 
@@ -276,28 +280,28 @@ Clear separation between:
 
 ---
 
-## 🎯 Engineering Focus
+## Engineering Focus
 
-* Clean API-based architecture
-* Secure route protection
-* User-specific data isolation
-* Structured backend aggregation
-* Intentional UI hierarchy
-* Data-driven 3D visualization
-
----
-
-## 📌 Future Improvements
-
-* Year-based analytics view
-* Export data functionality
-* Dark/light theme toggle
-* Performance optimization using instanced meshes
-* Advanced Three.js postprocessing effects
+- Clean API-based architecture
+- Secure route protection
+- User-specific data isolation
+- Structured backend aggregation
+- Intentional UI hierarchy
+- Data-driven 3D visualization
 
 ---
 
-## 📷 Live Demo
+## Future Improvements
+
+- Year-based analytics view
+- Export data functionality
+- Dark/light theme toggle
+- Performance optimization using instanced meshes
+- Advanced Three.js postprocessing effects
+
+---
+
+## Live Demo
 
 Frontend: [Live URL](https://momentum-analytics.vercel.app)
 Backend API: [API URL](https://momentum-api.render.com)
