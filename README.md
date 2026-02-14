@@ -1,4 +1,4 @@
-# Momentum – 3D Habit & Focus Analytics Dashboard
+# 3D Habit & Focus Analytics Dashboard
 
 A full-stack productivity micro-application that allows users to log daily activities, explore historical data, and visualize weekly analytics using an interactive Three.js 3D bar chart.
 
@@ -8,7 +8,7 @@ This project simulates a real SaaS-style productivity dashboard with authenticat
 
 ## Project Overview
 
-Momentum is a habit and focus tracking application designed to:
+The 3D Habit & Focus Analytics Dashboard is designed to:
 
 - Authenticate users securely
 - Allow daily activity logging
@@ -46,21 +46,14 @@ This is built as a coherent micro-product rather than isolated feature pages.
 - JWT (authentication)
 - bcrypt (password hashing)
 
-### Deployment
-
-- Frontend: @Vercel
-- Backend: @Render
-- Database: @MongoDB Atlas
-
 ---
 
 ## Setup Instructions
 
-### 1. Clone Repository
+### 1. Repository Setup
 
 ```bash
-git clone <repository-url>
-cd momentum-analytics
+cd habit-tracker
 ```
 
 ---
@@ -76,14 +69,14 @@ Create a `.env` file inside **backend**:
 
 ```
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
+MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 ```
 
 Run backend:
 
 ```bash
-npm run dev
+npm start
 ```
 
 ---
@@ -99,20 +92,21 @@ npm run dev
 Ensure frontend `.env` contains:
 
 ```
-VITE_API_URL=http://localhost:5000
+VITE_API_URL=http://localhost:5000/api
 ```
 
 ---
 
 ## Data Model / Schema
 
-### User Schema
+Located in `backend/database/models/`.
+
+### User Schema (`User.js`)
 
 ```js
 {
-  _id: ObjectId,
-  email: String,
-  password: String,
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   createdAt: Date,
   updatedAt: Date
 }
@@ -124,15 +118,14 @@ VITE_API_URL=http://localhost:5000
 
 ---
 
-### Activity Schema
+### Activity Schema (`Activity.js`)
 
 ```js
 {
-  _id: ObjectId,
-  user: ObjectId,
-  name: String,
-  duration: Number,
-  category: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  name: { type: String, required: true },
+  duration: { type: Number, required: true },
+  category: { type: String, required: true },
   createdAt: Date,
   updatedAt: Date
 }
@@ -144,7 +137,7 @@ Each activity belongs to a specific authenticated user.
 
 ## Analytics Logic
 
-Analytics are calculated dynamically via backend aggregation.
+Analytics are calculated dynamically via backend aggregation in `backend/src/controllers/activityController.js`.
 
 ### Weekly Time Range
 
@@ -193,7 +186,7 @@ Used to generate percentage-based breakdown in the UI.
 
 ## Three.js Visualization Logic
 
-The analytics visualization is implemented using Three.js and maps backend data directly to 3D geometry.
+The analytics visualization is implemented in `frontend/src/visualization/ThreeBarChart.jsx`. It maps backend data directly to 3D geometry.
 
 ### Data → Visual Mapping
 
@@ -239,30 +232,30 @@ normalizedHeight = (value / maxValue) * MAX_HEIGHT
 
 ---
 
-## Application Structure
+## Project Structure
 
 ```
 backend/
-  models/
-  routes/
-  controllers/
-  middleware/
   database/
+    models/       # Mongoose schemas (User, Activity)
+  src/
+    controllers/  # Business logic & Route handlers
+    middleware/   # Auth & Error handling
+    routes/       # API endpoints definitions
+    lib/          # Utility functions (JWT helpers)
+  index.js        # Server entry point
 
 frontend/
-  pages/
-  components/
-  components/three/
-  context/
-  services/
+  src/
+    components/   # Reusable UI components
+    pages/        # Main application views
+    visualization/# Three.js chart implementation
+    context/      # Global state (AuthContext)
+    api/          # Axios instance & API services
+    utils/        # UI & Date helpers
+    App.jsx       # App layout & Routing
+    main.jsx      # React entry point
 ```
-
-Clear separation between:
-
-- Authentication layer
-- Activity management
-- Analytics computation
-- Visualization engine
 
 ---
 
@@ -288,20 +281,3 @@ Clear separation between:
 - Structured backend aggregation
 - Intentional UI hierarchy
 - Data-driven 3D visualization
-
----
-
-## Future Improvements
-
-- Year-based analytics view
-- Export data functionality
-- Dark/light theme toggle
-- Performance optimization using instanced meshes
-- Advanced Three.js postprocessing effects
-
----
-
-## Live Demo
-
-Frontend: [Live URL](https://momentum-analytics.vercel.app)
-Backend API: [API URL](https://momentum-api.render.com)
